@@ -20,7 +20,7 @@ namespace Player
             
             if(joystick == null){
 
-                new ArgumentNullException("no joystick error");
+                Debug.LogError("No joystick provided");
 
             }
 

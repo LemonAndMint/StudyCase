@@ -34,7 +34,7 @@ namespace Player
                 _collisionManager = cm;
 
             if(_data == null)
-                new ArgumentNullException("Data is not implemented");
+                Debug.LogError("Data is not implemented");
 
             _input.OnJump += Jump;
             _input.OnSideMovement += _movement.MoveSide;
@@ -56,7 +56,6 @@ namespace Player
             }
 
         }
-
 
     }
 
