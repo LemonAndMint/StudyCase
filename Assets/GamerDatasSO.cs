@@ -10,7 +10,6 @@ namespace Data
 
         public float SideMoveSpeed;
         public float JumpStrength;
-        public float JumpCooldown;
 
     }
 
