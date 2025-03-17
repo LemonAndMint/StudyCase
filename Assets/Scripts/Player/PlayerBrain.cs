@@ -44,7 +44,7 @@ namespace Player
 
         public void MoveSide(){
 
-            new NotImplementedException("Dont need rn, use it from playerMovement");
+            new NotImplementedException("Dont need rn, just use it from playerMovement");
 
         }
 
@@ -52,22 +52,12 @@ namespace Player
 
             if(!_isJumped && _collisionManager.Contacted){
 
-                StartCoroutine(_jumpCooldown());
+                _movement.Jump();
 
             }
 
         }
 
-        private IEnumerator _jumpCooldown(){
-
-            _movement.Jump();
-            _isJumped = true;
-
-            yield return new WaitForSeconds(_data.JumpCooldown);
-
-            _isJumped = false;
-
-        }
 
     }
 

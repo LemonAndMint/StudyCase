@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   SideMoveSpeed: 10
-  JumpStrength: 50
+  JumpStrength: 20
   JumpCooldown: 2

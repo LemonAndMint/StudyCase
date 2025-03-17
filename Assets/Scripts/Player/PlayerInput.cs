@@ -14,6 +14,7 @@ namespace Player
 
         public DynamicJoystick joystick;
         private float _joystickCurrHori;
+        private bool _willJump;
 
         private void Start() {
             
@@ -31,10 +32,9 @@ namespace Player
             {
 
                 Touch touch = Input.GetTouch(0);
-                //Jump action
                 if(touch.phase == TouchPhase.Began){
 
-                    OnJump?.Invoke();
+                    _willJump = true;
 
                 }
 
@@ -50,6 +50,14 @@ namespace Player
             if(_joystickCurrHori != 0){
 
                 OnSideMovement?.Invoke(_joystickCurrHori);
+
+            }
+
+            //OnJump contains physic based methods and Input.GetTouch needs to be inside "Update". Otherwise Touch state doesnt read properly. 
+            if(_willJump){
+
+                OnJump?.Invoke();
+                _willJump = false;
 
             }
             
