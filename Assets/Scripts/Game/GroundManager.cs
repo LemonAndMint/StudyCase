@@ -14,7 +14,7 @@ namespace Level
         public GameManager gameManager;
         [SerializeField]
         private ObjectPooler pooler;
-        private List<Rigidbody> _activeGroundRB; 
+        private List<Transform> _activeGroundRB; 
         private float _levelSpeed;
 
         private void Start() {
@@ -24,7 +24,7 @@ namespace Level
 
             _levelSpeed = gameManager.LevelData.LevelForwardSpeed;
 
-            _activeGroundRB = new List<Rigidbody>();
+            _activeGroundRB = new List<Transform>();
 
             _initLevel();
 
@@ -38,7 +38,7 @@ namespace Level
 
         public void DestroyGround(GameObject releasingGO){
 
-            if( releasingGO.TryGetComponent(out Rigidbody releasingRB) && !_activeGroundRB.Contains(releasingRB) ){
+            if( releasingGO.TryGetComponent(out Transform releasingRB) && !_activeGroundRB.Contains(releasingRB) ){
 
                 Debug.LogError("You are trying to release an object that is not inside of the active game object list.");
                 return;
@@ -52,10 +52,10 @@ namespace Level
 
         }
 
-        public Rigidbody RetrieveGround(){
+        public Transform RetrieveGround(){
 
-            Rigidbody rb = pooler.GetObject();
-            rb.MovePosition(transform.position);
+            Transform rb = pooler.GetObject();
+            rb.transform.position = transform.position;
 
             return rb;
 
@@ -63,10 +63,10 @@ namespace Level
 
         private void _moveGround(){
 
-            foreach (Rigidbody groundRB in _activeGroundRB)
+            foreach (Transform groundRB in _activeGroundRB)
             {
                 
-                groundRB.MovePosition(groundRB.position + Vector3.back * _levelSpeed * Time.deltaTime); 
+                groundRB.transform.position = groundRB.position + Vector3.back * _levelSpeed * Time.deltaTime; 
 
             }
 
@@ -76,15 +76,15 @@ namespace Level
 
             int counter = gameManager.LevelData.GroundCount;
 
-            Rigidbody groundRB = RetrieveGround();
+            Transform groundRB = RetrieveGround();
             _activeGroundRB.Add(groundRB);
 
             for (int i = 1; i < counter + 1; i++)
             {
                 groundRB = RetrieveGround();
-                Rigidbody newlyAddedRB = _activeGroundRB.Last();
+                Transform newlyAddedRB = _activeGroundRB.Last();
 
-                groundRB.MovePosition( newlyAddedRB.position + Vector3.back * groundRB.transform.localScale.z ); 
+                groundRB.transform.position = newlyAddedRB.position + Vector3.back * groundRB.transform.localScale.z; 
                 //No need to create jump variaties, make it with adding long-short grounds.
 
                 _activeGroundRB.Add(groundRB);
