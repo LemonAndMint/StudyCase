@@ -58,7 +58,7 @@ namespace Level
 
             float distance = _lengthBetweenGrounds(_activeGroundTRList.Last().localScale.z, TR.localScale.z);
 
-            TR.transform.position = _activeGroundTRList.Last().transform.position + Vector3.forward * distance; //#TODO make better positioning
+            TR.transform.position = _activeGroundTRList.Last().transform.position + Vector3.forward * distance; 
 
             return TR;
 
@@ -70,7 +70,7 @@ namespace Level
 
             if(normalDistance < 0){
 
-                return prevObjLength / 2 + UnityEngine.Random.Range(gameManager.LevelData.MinDistBetweenGrounds, gameManager.LevelData.MaxDistBetweenGrounds);
+                return currObjLength + gameManager.LevelData.MinDistBetweenGrounds;
 
             }
 
@@ -99,12 +99,14 @@ namespace Level
 
             _activeGroundTRList.Add(groundTR);
 
-            for (int i = 1; i < counter + 1; i++)
+            for (int i = 1; i < counter; i++)
             {
                 groundTR = CreateGround();
                 Transform newlyAddedTR = _activeGroundTRList.Last();
 
-                groundTR.transform.position = newlyAddedTR.position + Vector3.back * groundTR.transform.localScale.z; 
+                float distance = _lengthBetweenGrounds(newlyAddedTR.localScale.z, groundTR.localScale.z);
+
+                groundTR.transform.position = newlyAddedTR.position + Vector3.back * distance; 
                 // No need to create jump variaties, make it with adding long-short grounds.
 
                 _activeGroundTRList.Add(groundTR);
