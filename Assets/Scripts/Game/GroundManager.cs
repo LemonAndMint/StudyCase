@@ -103,6 +103,7 @@ namespace Level
         public void ClearLevel(){
 
             _activeGroundTRList.ForEach( x => pooler.ReleaseObject(x) );
+            _activeGroundTRList.RemoveRange(0, _activeGroundTRList.Count);
 
         }
 
@@ -110,7 +111,6 @@ namespace Level
 
             foreach (Transform groundTR in _activeGroundTRList)
             {
-                
                 groundTR.transform.position = groundTR.position + Vector3.back * _levelSpeed * Time.deltaTime; 
 
             }
