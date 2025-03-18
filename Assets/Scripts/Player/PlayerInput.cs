@@ -16,7 +16,7 @@ namespace Player
         private float _joystickCurrHori;
         private bool _willJump;
 
-        private void Start() {
+        private void Awake() {
             
             if(joystick == null){
 

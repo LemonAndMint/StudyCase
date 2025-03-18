@@ -1184,6 +1184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 133fc492e070b7e4088ad360701573cf, type: 2}
+  playerBrain: {fileID: 888769680}
+  groundManager: {fileID: 1127331215}
 --- !u!114 &1127331215
 MonoBehaviour:
   m_ObjectHideFlags: 0

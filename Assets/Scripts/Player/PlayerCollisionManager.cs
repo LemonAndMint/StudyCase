@@ -17,7 +17,7 @@ namespace Player
         public string CriticalContactLayerName;
         private int _criticalLayerName;
 
-        private void Start() {
+        private void Awake() {
             
             if(!string.IsNullOrEmpty(CriticalContactLayerName)){
 

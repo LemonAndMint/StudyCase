@@ -14,7 +14,7 @@ namespace Player
         public Transform playerTrans;
         public PlayerBrain playerBrain;
 
-        private void Start() {
+        private void Awake() {
             
             if(playerrb == null && TryGetComponent( out Rigidbody pr ))
                 playerrb = pr;

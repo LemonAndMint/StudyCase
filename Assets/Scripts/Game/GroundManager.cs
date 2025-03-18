@@ -19,7 +19,7 @@ namespace Level
         private float _levelSpeed;
         private bool _isGameStarted = false;
 
-        private void Start() {
+        private void Awake() {
             
             if(pooler != null)
                 pooler.Init(gameManager.LevelData.planePrefbs);

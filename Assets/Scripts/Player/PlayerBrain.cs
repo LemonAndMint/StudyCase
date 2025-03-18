@@ -22,7 +22,7 @@ namespace Player
 
         private bool _isJumped = false;
 
-        private void Start() {
+        private void Awake() {
             
             if(_input == null && TryGetComponent( out PlayerInput pi ))
                 _input = pi;
