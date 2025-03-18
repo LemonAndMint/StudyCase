@@ -38,6 +38,19 @@ namespace Level
 
         }
 
+        public void DestroyGround(GameObject releasingGO){
+
+            if(!_activeGroundGO.Contains(releasingGO)){
+
+                Debug.LogError("You are trying to release an object that is not inside of active game objects");
+                return;
+
+            }
+
+            pooler.ReleaseObject(releasingGO);
+
+        }
+
         private void _moveGround(){
 
             foreach (GameObject ground in _activeGroundGO)
@@ -48,6 +61,8 @@ namespace Level
             }
 
         }
+
+        //private void 
 
     }
 

@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -19,7 +19,7 @@ namespace Level
         }
 
         public GameObject GetObject(){
-
+            
             return _groundPool.Get();
 
         }
@@ -32,7 +32,7 @@ namespace Level
 
         private GameObject _onCreate(){
 
-            GameObject groundPrefb = Instantiate(_prefbsToIns[Random.Range(0, _prefbsToIns.Count)], Vector3.zero, Quaternion.identity);
+            GameObject groundPrefb = Instantiate(_prefbsToIns[UnityEngine.Random.Range(0, _prefbsToIns.Count)], Vector3.zero, Quaternion.identity);
 
             return groundPrefb;
 

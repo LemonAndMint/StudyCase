@@ -8,6 +8,4 @@ public class GameManager : MonoBehaviour
     private LevelDataSO _data;
     public LevelDataSO LevelData{ get => _data; }
 
-    public GroundManager groundManager;
-
 }
