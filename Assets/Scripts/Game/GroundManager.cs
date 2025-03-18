@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game;
 using UnityEngine;
 
 namespace Level
@@ -16,6 +17,7 @@ namespace Level
         private ObjectPooler pooler;
         private List<Transform> _activeGroundTRList; 
         private float _levelSpeed;
+        private bool _isGameStarted = false;
 
         private void Start() {
             
@@ -25,8 +27,6 @@ namespace Level
             _levelSpeed = gameManager.LevelData.LevelForwardSpeed;
 
             _activeGroundTRList = new List<Transform>();
-
-            _initLevel();
 
         }
 
@@ -55,24 +55,20 @@ namespace Level
         public Transform RetrieveGround(){
 
             Transform TR = pooler.GetObject();
-            TR.transform.position = transform.position + Vector3.forward * _activeGroundTRList.Last().localScale.z;
+            TR.transform.position = transform.position + Vector3.forward * _activeGroundTRList.Last().localScale.z; //#TODO make better positioning
 
             return TR;
 
         }
 
-        private void _moveGround(){
+        public void InitLevel(){
 
-            foreach (Transform groundTR in _activeGroundTRList)
-            {
-                
-                groundTR.transform.position = groundTR.position + Vector3.back * _levelSpeed * Time.deltaTime; 
+            if(_isGameStarted){
+
+                Debug.LogError("You have already initialized the level");
+                return;
 
             }
-
-        }
-
-        private void _initLevel(){
 
             int counter = gameManager.LevelData.GroundCount;
 
@@ -102,6 +98,25 @@ namespace Level
             _activeGroundTRList.RemoveAt(0);
 
             _activeGroundTRList.Add(groundTR);
+
+            _isGameStarted = true;
+
+        }
+
+        public void FlipStartedSwitch(){
+
+            _isGameStarted = false;
+
+        }
+
+        private void _moveGround(){
+
+            foreach (Transform groundTR in _activeGroundTRList)
+            {
+                
+                groundTR.transform.position = groundTR.position + Vector3.back * _levelSpeed * Time.deltaTime; 
+
+            }
 
         }
 
