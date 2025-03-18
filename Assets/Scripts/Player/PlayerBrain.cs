@@ -41,7 +41,7 @@ namespace Player
 
         public void MoveSide(){
 
-            new NotImplementedException("Dont need rn, just use it from playerMovement");
+            throw new NotImplementedException("Dont need rn, just use it from playerMovement");
 
         }
 
