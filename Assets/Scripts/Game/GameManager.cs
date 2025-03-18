@@ -19,13 +19,14 @@ namespace Game
         public Vector3 playerStartPoint;
 
         private Transform _playerTrans;
+        private bool _isGameStarted = false;
+        public bool isGameStarted{ get => _isGameStarted; }
 
         private void Start() {
 
             _playerTrans = playerBrain.transform;
 
             playerBrain.CollisionManager.OnCriticalCollision += Lose;
-            playerBrain.CollisionManager.OnCriticalCollision += groundManager.FlipStartedSwitch;
 
             Time.timeScale = 0;
             groundManager.InitLevel();
@@ -49,6 +50,8 @@ namespace Game
             Time.timeScale = 0;
             uiManager.ShowLose();
 
+            _isGameStarted = false;
+
         }
 
         public void RestartGame(){
@@ -65,6 +68,8 @@ namespace Game
         }
 
         public void StartGame(){
+
+            _isGameStarted = true;
 
             Time.timeScale = 1;
             uiManager.HideStart();

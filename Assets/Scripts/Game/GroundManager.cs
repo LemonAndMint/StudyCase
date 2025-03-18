@@ -17,7 +17,6 @@ namespace Level
         private ObjectPooler pooler;
         private List<Transform> _activeGroundTRList; 
         private float _levelSpeed;
-        private bool _isGameStarted = false;
 
         private void Awake() {
             
@@ -63,7 +62,7 @@ namespace Level
 
         public void InitLevel(){
 
-            if(_isGameStarted){
+            if(gameManager.isGameStarted){
 
                 Debug.LogError("You have already initialized the level");
                 return;
@@ -99,19 +98,11 @@ namespace Level
 
             _activeGroundTRList.Add(groundTR);
 
-            _isGameStarted = true;
-
         }
 
         public void ClearLevel(){
 
             _activeGroundTRList.ForEach( x => pooler.ReleaseObject(x) );
-
-        }
-
-        public void FlipStartedSwitch(){
-
-            _isGameStarted = false;
 
         }
 
