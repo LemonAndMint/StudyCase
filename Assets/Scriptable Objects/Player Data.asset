@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9068323b8664b6943ac31df23403fccb, type: 3}
   m_Name: Player Data
   m_EditorClassIdentifier: 
-  SideMoveSpeed: 10
+  SideMoveSpeed: 15
   JumpStrength: 50
