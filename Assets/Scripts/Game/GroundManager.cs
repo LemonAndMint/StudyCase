@@ -103,6 +103,12 @@ namespace Level
 
         }
 
+        public void ClearLevel(){
+
+            _activeGroundTRList.ForEach( x => pooler.ReleaseObject(x) );
+
+        }
+
         public void FlipStartedSwitch(){
 
             _isGameStarted = false;
