@@ -10,9 +10,9 @@ namespace Player
     public class PlayerBrain : MonoBehaviour
     {
         private PlayerInput _input;
-        //public PlayerInput Input;
+        // public PlayerInput Input;
         private PlayerMovement _movement;
-        //public PlayerMovement Movement;
+        // public PlayerMovement Movement;
         private PlayerCollisionManager _collisionManager;
         public PlayerCollisionManager CollisionManager{ get => _collisionManager; }
 

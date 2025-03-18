@@ -29,13 +29,13 @@ namespace Player
 
         public void MoveSide(float positionDiff){
 
-            //Dont want the player to lay down and start rocketing itself to different directions.
+            // Dont want the player to lay down and start rocketing itself to different directions.
             playerrb.MovePosition(playerrb.position + Vector3.right * positionDiff * playerBrain.Data.SideMoveSpeed * Time.deltaTime);
 
         }
         public void Jump(){
 
-            //Dont want the player to lay down and start rocketing itself to sides.
+            // Dont want the player to lay down and start rocketing itself to sides.
             playerrb.AddForce(Vector3.up * playerBrain.Data.JumpStrength * _FORCEMULTI * Time.deltaTime, ForceMode.Impulse);
 
         }

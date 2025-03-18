@@ -12,7 +12,7 @@ namespace Level
         private ObjectPool<Transform> _groundPool;
         public ObjectPool<Transform> GroundPool{ get=> _groundPool; }
 
-        //Translate GameObject from Transform
+        // Translate GameObject from Transform
         public void Init(List<GameObject> PrefbsToIns) {
             
             _prefbsToIns = PrefbsToIns;

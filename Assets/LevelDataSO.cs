@@ -9,7 +9,7 @@ namespace Data
     {
         public int GroundCount;
         public float LevelForwardSpeed;
-        //Will be used with object pooling.
+        // Will be used with object pooling.
         public List<GameObject> planePrefbs;
 
     }

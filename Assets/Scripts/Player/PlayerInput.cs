@@ -53,7 +53,7 @@ namespace Player
 
             }
 
-            //OnJump contains physic based methods and Input.GetTouch needs to be inside "Update". Otherwise Touch state doesnt read properly. 
+            // OnJump contains physic based methods and Input.GetTouch needs to be inside "Update". Otherwise Touch state doesnt read properly. 
             if(_willJump){
 
                 OnJump?.Invoke();

@@ -8,7 +8,7 @@ public class EdgeCollisionChecker : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         
-        //No need for cheking the "other" collider for validation. "Edge" only able to collide with "Ground". 
+        // No need for cheking the "other" collider for validation. "Edge" only able to collide with "Ground". 
         eventsToTrigger?.Invoke(other.gameObject);
 
     }

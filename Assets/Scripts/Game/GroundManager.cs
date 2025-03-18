@@ -14,7 +14,7 @@ namespace Level
         public GameManager gameManager;
         [SerializeField]
         private ObjectPooler pooler;
-        private List<Transform> _activeGroundRB; 
+        private List<Transform> _activeGroundTRList; 
         private float _levelSpeed;
 
         private void Start() {
@@ -24,7 +24,7 @@ namespace Level
 
             _levelSpeed = gameManager.LevelData.LevelForwardSpeed;
 
-            _activeGroundRB = new List<Transform>();
+            _activeGroundTRList = new List<Transform>();
 
             _initLevel();
 
@@ -38,35 +38,35 @@ namespace Level
 
         public void DestroyGround(GameObject releasingGO){
 
-            if( releasingGO.TryGetComponent(out Transform releasingRB) && !_activeGroundRB.Contains(releasingRB) ){
+            if( releasingGO.TryGetComponent(out Transform releasingTR) && !_activeGroundTRList.Contains(releasingTR) ){
 
                 Debug.LogError("You are trying to release an object that is not inside of the active game object list.");
                 return;
 
             }
 
-            _activeGroundRB.Remove(releasingRB);
-            pooler.ReleaseObject(releasingRB);
+            _activeGroundTRList.Remove(releasingTR);
+            pooler.ReleaseObject(releasingTR);
 
-            _activeGroundRB.Add(RetrieveGround());
+            _activeGroundTRList.Add(RetrieveGround());
 
         }
 
         public Transform RetrieveGround(){
 
-            Transform rb = pooler.GetObject();
-            rb.transform.position = transform.position;
+            Transform TR = pooler.GetObject();
+            TR.transform.position = transform.position + Vector3.forward * _activeGroundTRList.Last().localScale.z;
 
-            return rb;
+            return TR;
 
         }
 
         private void _moveGround(){
 
-            foreach (Transform groundRB in _activeGroundRB)
+            foreach (Transform groundTR in _activeGroundTRList)
             {
                 
-                groundRB.transform.position = groundRB.position + Vector3.back * _levelSpeed * Time.deltaTime; 
+                groundTR.transform.position = groundTR.position + Vector3.back * _levelSpeed * Time.deltaTime; 
 
             }
 
@@ -76,20 +76,32 @@ namespace Level
 
             int counter = gameManager.LevelData.GroundCount;
 
-            Transform groundRB = RetrieveGround();
-            _activeGroundRB.Add(groundRB);
+            Transform groundTR = pooler.GetObject();
+            groundTR.transform.position = transform.position;
+
+            _activeGroundTRList.Add(groundTR);
 
             for (int i = 1; i < counter + 1; i++)
             {
-                groundRB = RetrieveGround();
-                Transform newlyAddedRB = _activeGroundRB.Last();
+                groundTR = RetrieveGround();
+                Transform newlyAddedTR = _activeGroundTRList.Last();
 
-                groundRB.transform.position = newlyAddedRB.position + Vector3.back * groundRB.transform.localScale.z; 
-                //No need to create jump variaties, make it with adding long-short grounds.
+                groundTR.transform.position = newlyAddedTR.position + Vector3.back * groundTR.transform.localScale.z; 
+                // No need to create jump variaties, make it with adding long-short grounds.
 
-                _activeGroundRB.Add(groundRB);
+                _activeGroundTRList.Add(groundTR);
 
             }
+
+            // We are instantiating the grounds from further to back. 
+            // First added ground should be in last list in order us to determine next ground's position. 
+            // Newly repositioned ground's position should be based on its back member's length . 
+            // To do this for only one time we need our first instantiated piece to be in last slot.
+
+            groundTR = _activeGroundTRList.First();
+            _activeGroundTRList.RemoveAt(0);
+
+            _activeGroundTRList.Add(groundTR);
 
         }
 
