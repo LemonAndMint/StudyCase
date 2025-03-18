@@ -38,7 +38,6 @@ namespace Player
             if(collision.gameObject.layer == _criticalLayerName){
 
                 OnCriticalCollision?.Invoke();
-                Debug.Log("wörks");
 
             }
 
