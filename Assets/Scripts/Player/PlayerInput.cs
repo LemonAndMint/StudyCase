@@ -46,7 +46,6 @@ namespace Player
         {
             _joystickCurrHori = joystick.Horizontal;
 
-
             if(_joystickCurrHori != 0){
 
                 OnSideMovement?.Invoke(_joystickCurrHori);

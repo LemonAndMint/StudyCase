@@ -20,8 +20,6 @@ namespace Player
         private PlayerDataSO _data;
         public PlayerDataSO Data{ get => _data; }
 
-        private bool _isJumped = false;
-
         private void Awake() {
             
             if(_input == null && TryGetComponent( out PlayerInput pi ))
@@ -49,7 +47,7 @@ namespace Player
 
         public void Jump(){
 
-            if(!_isJumped && _collisionManager.Contacted){
+            if(_collisionManager.Contacted){
 
                 _movement.Jump();
 

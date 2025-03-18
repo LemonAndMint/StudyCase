@@ -32,7 +32,6 @@ namespace Player
 
         void OnCollisionEnter(Collision collision)
         {
-            
             _contacted = true;
 
             if(collision.gameObject.layer == _criticalLayerName){
@@ -40,6 +39,12 @@ namespace Player
                 OnCriticalCollision?.Invoke();
 
             }
+
+        }
+
+        void OnCollisionStay(Collision collision)
+        {
+            _contacted = true;
 
         }
 
