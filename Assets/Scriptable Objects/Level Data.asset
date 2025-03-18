@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Level Data
   m_EditorClassIdentifier: 
   GroundCount: 5
-  MaxGroundHoleLength: 1.25
-  MinGroundHoleLength: 0
   LevelForwardSpeed: 10
+  MinDistBetweenGrounds: 2
+  MaxDistBetweenGrounds: 5
   planePrefbs:
   - {fileID: 109708100730203064, guid: 396847ecdcee8ee428ef00f5e09bc913, type: 3}
   - {fileID: 8394968705274076685, guid: b853caa7206bfa94492bf5831e9a8812, type: 3}

@@ -9,6 +9,9 @@ namespace Data
     {
         public int GroundCount;
         public float LevelForwardSpeed;
+        public float MinDistBetweenGrounds;
+        public float MaxDistBetweenGrounds;
+
         // Will be used with object pooling.
         public List<GameObject> planePrefbs;
 

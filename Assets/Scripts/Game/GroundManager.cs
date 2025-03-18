@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Level
         private void Awake() {
             
             if(pooler != null)
-                pooler.Init(gameManager.LevelData.planePrefbs);
+                pooler.Init(gameManager.LevelData.planePrefbs, gameManager.LevelData.GroundCount * 2);
 
             _levelSpeed = gameManager.LevelData.LevelForwardSpeed;
 
@@ -44,22 +45,44 @@ namespace Level
 
             }
 
+            _activeGroundTRList.Add(CreateGround());
+
             _activeGroundTRList.Remove(releasingTR);
             pooler.ReleaseObject(releasingTR);
 
-            _activeGroundTRList.Add(RetrieveGround());
-
         }
 
-        public Transform RetrieveGround(){
+        public Transform CreateGround(){
 
             Transform TR = pooler.GetObject();
-            TR.transform.position = transform.position + Vector3.forward * _activeGroundTRList.Last().localScale.z; //#TODO make better positioning
+
+            float distance = _lengthBetweenGrounds(_activeGroundTRList.Last().localScale.z, TR.localScale.z);
+
+            TR.transform.position = _activeGroundTRList.Last().transform.position + Vector3.forward * distance; //#TODO make better positioning
 
             return TR;
 
         }
 
+        private float _lengthBetweenGrounds(float prevObjLength, float currObjLength){
+
+            float normalDistance = prevObjLength / 2 - currObjLength / 2;
+
+            if(normalDistance < 0){
+
+                return prevObjLength / 2 + UnityEngine.Random.Range(gameManager.LevelData.MinDistBetweenGrounds, gameManager.LevelData.MaxDistBetweenGrounds);
+
+            }
+
+            if(normalDistance > gameManager.LevelData.MaxDistBetweenGrounds){
+
+                return gameManager.LevelData.MaxDistBetweenGrounds;
+
+            }
+
+            return prevObjLength;
+
+        }
         public void InitLevel(){
 
             if(gameManager.isGameStarted){
@@ -78,7 +101,7 @@ namespace Level
 
             for (int i = 1; i < counter + 1; i++)
             {
-                groundTR = RetrieveGround();
+                groundTR = CreateGround();
                 Transform newlyAddedTR = _activeGroundTRList.Last();
 
                 groundTR.transform.position = newlyAddedTR.position + Vector3.back * groundTR.transform.localScale.z; 
@@ -88,10 +111,10 @@ namespace Level
 
             }
 
-            // We are instantiating the grounds from further to back. 
-            // First added ground should be in last list in order us to determine next ground's position. 
-            // Newly repositioned ground's position should be based on its back member's length . 
-            // To do this for only one time we need our first instantiated piece to be in last slot.
+            // We are instantiating grounds from further to back. 
+            // First added ground should be in last in list in order us to determine next ground's position. 
+            // Newly repositioned ground's position should be based on its back member's length. 
+            // To do this, only one time, we need our first instantiated piece to be in last slot.
 
             groundTR = _activeGroundTRList.First();
             _activeGroundTRList.RemoveAt(0);

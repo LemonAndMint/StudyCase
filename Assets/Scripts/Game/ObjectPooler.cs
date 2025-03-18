@@ -13,10 +13,31 @@ namespace Level
         public ObjectPool<Transform> GroundPool{ get=> _groundPool; }
 
         // Translate GameObject from Transform
-        public void Init(List<GameObject> PrefbsToIns) {
+        public void Init(List<GameObject> PrefbsToIns, int warmUpObjectCount) {
             
             _prefbsToIns = PrefbsToIns;
-            _groundPool = new ObjectPool<Transform>(_onCreate, _onTake, _onReturn, null, true, 10, 100);
+            _groundPool = new ObjectPool<Transform>(_onCreate, _onTake, _onReturn, null, true, 20, 100);
+
+            //WARM UP ++
+
+            Transform[] tempTransArr = new Transform[warmUpObjectCount]; 
+
+            for (int i = 0; i < warmUpObjectCount; i++)
+            {
+                
+                Transform tempTrans = _groundPool.Get();
+                tempTransArr[i] = tempTrans;
+
+            }
+
+            foreach (Transform tempTrans in tempTransArr)
+            {
+
+                _groundPool.Release(tempTrans);
+                
+            }
+
+            //WARM UP --
             
         }
 
