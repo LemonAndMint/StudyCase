@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Level
@@ -75,10 +76,17 @@ namespace Level
 
             int counter = gameManager.LevelData.GroundCount;
 
+            Rigidbody groundRB = RetrieveGround();
+            _activeGroundRB.Add(groundRB);
+
             for (int i = 1; i < counter + 1; i++)
             {
-                Rigidbody groundRB = RetrieveGround();
-                groundRB.MovePosition(transform.position - transform.forward * groundRB.transform.localScale.z * i);
+                groundRB = RetrieveGround();
+                Rigidbody newlyAddedRB = _activeGroundRB.Last();
+
+                groundRB.MovePosition( newlyAddedRB.position + Vector3.back * groundRB.transform.localScale.z ); 
+                //No need to create jump variaties, make it with adding long-short grounds.
+
                 _activeGroundRB.Add(groundRB);
 
             }

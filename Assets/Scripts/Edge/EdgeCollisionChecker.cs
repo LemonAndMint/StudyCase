@@ -7,7 +7,6 @@ public class ObstacleCollisionChecker : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         
-        Debug.Log("wörks");
         eventsToTrigger?.Invoke(other.gameObject);
 
     }
