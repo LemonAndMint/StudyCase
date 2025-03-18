@@ -5,22 +5,34 @@ using UnityEngine.Pool;
 
 namespace Level
 {
-    [RequireComponent(typeof(GameManager))]
     public class ObjectPooler : MonoBehaviour
     {
-        public GameManager gameManager;
+        private List<GameObject> _prefbsToIns;
         private ObjectPool<GameObject> _groundPool;
         public ObjectPool<GameObject> GroundPool{ get=> _groundPool; }
 
-        private void Start() {
+        public void Init(List<GameObject> PrefbsToIns) {
             
+            _prefbsToIns = PrefbsToIns;
             _groundPool = new ObjectPool<GameObject>(_onCreate, _onTake, _onReturn, null, true, 10, 100);
+            
+        }
+
+        public GameObject GetObject(){
+
+            return _groundPool.Get();
+
+        }
+
+        public void ReleaseObject(GameObject objectToRelease){
+
+            _groundPool.Release(objectToRelease);
 
         }
 
         private GameObject _onCreate(){
 
-            GameObject groundPrefb = Instantiate(gameManager.Data.planePrefbs[Random.Range(0, gameManager.Data.planePrefbs.Count)], Vector3.zero, Quaternion.identity);
+            GameObject groundPrefb = Instantiate(_prefbsToIns[Random.Range(0, _prefbsToIns.Count)], Vector3.zero, Quaternion.identity);
 
             return groundPrefb;
 
