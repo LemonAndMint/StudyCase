@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2088c2a8d1c9ab849b5cb50279b79f44, type: 3}
   m_Name: Level Data
   m_EditorClassIdentifier: 
+  GroundCount: 5
   LevelForwardSpeed: 10
   planePrefbs:
   - {fileID: 109708100730203064, guid: 396847ecdcee8ee428ef00f5e09bc913, type: 3}

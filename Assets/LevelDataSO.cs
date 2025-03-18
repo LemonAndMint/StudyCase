@@ -7,7 +7,7 @@ namespace Data
     [CreateAssetMenu(fileName = "New Level Data", menuName = "Data/Level Data", order = 1)]
     public class LevelDataSO : ScriptableObject
     {
-
+        public int GroundCount;
         public float LevelForwardSpeed;
         //Will be used with object pooling.
         public List<GameObject> planePrefbs;

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace Level
         public GameManager gameManager;
         [SerializeField]
         private ObjectPooler pooler;
-        private List<GameObject> _activeGroundGO; 
+        private List<Rigidbody> _activeGroundRB; 
         private float _levelSpeed;
 
         private void Start() {
@@ -22,15 +23,11 @@ namespace Level
 
             _levelSpeed = gameManager.LevelData.LevelForwardSpeed;
 
-            _activeGroundGO = new List<GameObject>();
+            _activeGroundRB = new List<Rigidbody>();
 
-            _activeGroundGO.Add(pooler.GetObject());
-            _activeGroundGO.Add(pooler.GetObject());
-            _activeGroundGO.Add(pooler.GetObject());
-            _activeGroundGO.Add(pooler.GetObject());
+            _initLevel();
 
         }
-
 
         void FixedUpdate()
         {
@@ -40,29 +37,53 @@ namespace Level
 
         public void DestroyGround(GameObject releasingGO){
 
-            if(!_activeGroundGO.Contains(releasingGO)){
+            if( releasingGO.TryGetComponent(out Rigidbody releasingRB) && !_activeGroundRB.Contains(releasingRB) ){
 
-                Debug.LogError("You are trying to release an object that is not inside of active game objects");
+                Debug.LogError("You are trying to release an object that is not inside of the active game object list.");
                 return;
 
             }
 
-            pooler.ReleaseObject(releasingGO);
+            _activeGroundRB.Remove(releasingRB);
+            pooler.ReleaseObject(releasingRB);
+
+            _activeGroundRB.Add(RetrieveGround());
+
+        }
+
+        public Rigidbody RetrieveGround(){
+
+            Rigidbody rb = pooler.GetObject();
+            rb.MovePosition(transform.position);
+
+            return rb;
 
         }
 
         private void _moveGround(){
 
-            foreach (GameObject ground in _activeGroundGO)
+            foreach (Rigidbody groundRB in _activeGroundRB)
             {
                 
-                ground.transform.position += Vector3.back * _levelSpeed * Time.deltaTime; 
+                groundRB.MovePosition(groundRB.position + Vector3.back * _levelSpeed * Time.deltaTime); 
 
             }
 
         }
 
-        //private void 
+        private void _initLevel(){
+
+            int counter = gameManager.LevelData.GroundCount;
+
+            for (int i = 1; i < counter + 1; i++)
+            {
+                Rigidbody groundRB = RetrieveGround();
+                groundRB.MovePosition(transform.position - transform.forward * groundRB.transform.localScale.z * i);
+                _activeGroundRB.Add(groundRB);
+
+            }
+
+        }
 
     }
 
