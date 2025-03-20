@@ -65,7 +65,7 @@ namespace Level
 
             }
 
-            Debug.LogAssertion("No Transform found in PREFAB... Dont worry! i will add Transform for you this time but dont forget to add it in your prefab next time :)");
+            Debug.LogAssertion("Well i don't know how did you manage to NOT add a TRANSFORM... I would like to know that. Still, i can't allow an object to not have one of it's basic properties!");
             return groundGO.AddComponent<Transform>();
 
         }
