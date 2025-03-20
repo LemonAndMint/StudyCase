@@ -10,14 +10,14 @@ namespace Level
     public class ObjectPooler : MonoBehaviour
     {
         private List<GameObject> _prefbsToIns;
-        private ObjectPool<Transform> _groundPool;
-        public ObjectPool<Transform> GroundPool{ get=> _groundPool; }
+        private RandomAccessPool<Transform> _groundPool;
+        public RandomAccessPool<Transform> GroundPool{ get=> _groundPool; }
 
         // Translate GameObject from Transform
         public void Init(List<GameObject> PrefbsToIns, int warmUpObjectCount) {
             
             _prefbsToIns = PrefbsToIns;
-            _groundPool = new ObjectPool<Transform>(_onCreate, _onTake, _onReturn, null, true, 20, 100);
+            _groundPool = new RandomAccessPool<Transform>(_onCreate, _onTake, _onReturn, null, true, 20, 100);
 
             //WARM UP ++
 

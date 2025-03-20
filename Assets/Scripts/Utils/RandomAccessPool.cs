@@ -4,11 +4,9 @@ using UnityEngine.Pool;
 
 namespace Pool{
 
-    //#TODO make a random access pool
-
-    /*public class RandomAccessPool<T> : ObjectPool<T> where T : class
+    public class RandomAccessPool<T> : ObjectPool<T> , IDisposable where T : class
     {
-        internal readonly Dictionary<T, bool> m_List;
+        internal readonly List<T> m_List;
 
         private readonly Func<T> m_CreateFunc;
 
@@ -28,8 +26,8 @@ namespace Pool{
 
         public new int CountInactive => m_List.Count;
 
-        public RandomAccessPool(Func<T> createFunc, Action<T> actionOnGet = null, Action<T> actionOnRelease = null, Action<T> actionOnDestroy = null, bool collectionCheck = true, int defaultCapacity = 10, int maxSize = 10000) : 
-        base(createFunc, actionOnGet, actionOnRelease, actionOnDestroy, collectionCheck, defaultCapacity, maxSize)
+        public RandomAccessPool(Func<T> createFunc, Action<T> actionOnGet = null, Action<T> actionOnRelease = null, Action<T> actionOnDestroy = null, bool collectionCheck = true, int defaultCapacity = 10, int maxSize = 10000)
+        : base(createFunc, actionOnGet, actionOnRelease, actionOnDestroy, collectionCheck, defaultCapacity, maxSize)
         {
             if (createFunc == null)
             {
@@ -41,7 +39,7 @@ namespace Pool{
                 throw new ArgumentException("Max Size must be greater than 0", "maxSize");
             }
 
-            m_List = new Dictionary<T, bool>(defaultCapacity);
+            m_List = new List<T>(defaultCapacity);
             m_CreateFunc = createFunc;
             m_MaxSize = maxSize;
             m_ActionOnGet = actionOnGet;
@@ -60,7 +58,7 @@ namespace Pool{
             }
             else
             {
-                int index = m_List.Count - 1;
+                int index = UnityEngine.Random.Range(0, CountInactive);
                 val = m_List[index];
                 m_List.RemoveAt(index);
             }
@@ -90,7 +88,7 @@ namespace Pool{
             m_ActionOnRelease?.Invoke(element);
             if (CountInactive < m_MaxSize)
             {
-                m_List[element] = true;
+                m_List.Add(element);
                 return;
             }
 
@@ -116,6 +114,5 @@ namespace Pool{
         {
             Clear();
         }
-    }*/
-
+    }
 }
